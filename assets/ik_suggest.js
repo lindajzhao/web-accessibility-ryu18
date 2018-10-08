@@ -33,40 +33,25 @@ var pluginName = "ik_suggest",
 		
 		plugin = this;
 		
-<<<<<<< HEAD
 		plugin.notify = $('<div/>') // add hidden live region to be used by screen readers
 			.addClass('ik_readersonly');
 		
 		$elem = plugin.element
-=======
-		$elem = this.element
->>>>>>> initial commit 👌
 			.attr({
 				'autocomplete': 'off'
 			})
 			.wrap('<span class="ik_suggest"></span>') 
-<<<<<<< HEAD
 			.on('focus', {'plugin': plugin}, plugin.onFocus)
-=======
->>>>>>> initial commit 👌
 			.on('keydown', {'plugin': plugin}, plugin.onKeyDown) // add keydown event
 			.on('keyup', {'plugin': plugin}, plugin.onKeyUp) // add keyup event
 			.on('focusout', {'plugin': plugin}, plugin.onFocusOut);  // add focusout event
 		
-<<<<<<< HEAD
 		plugin.list = $('<ul/>').addClass('suggestions');
 		
-		$elem.after(plugin.notify, plugin.list);
-=======
-		this.list = $('<ul/>').addClass('suggestions');
-		
-		$elem.after(this.notify, this.list);
->>>>>>> initial commit 👌
-				
+		$elem.after(plugin.notify, plugin.list);		
 	};
 	
 	/** 
-<<<<<<< HEAD
 	 * Handles focus event on text field.
 	 * 
 	 * @param {object} event - Keyboard event.
@@ -82,9 +67,7 @@ var pluginName = "ik_suggest",
 	};
 	
 	/** 
-=======
->>>>>>> initial commit 👌
-	 * Handles kedown event on text field.
+	 * Handles kedyown event on text field.
 	 * 
 	 * @param {object} event - Keyboard event.
 	 * @param {object} event.data - Event data.
@@ -130,40 +113,20 @@ var pluginName = "ik_suggest",
 		
 		plugin = event.data.plugin;
 		$me = $(event.currentTarget);
-<<<<<<< HEAD
+			plugin.list.empty();
 			
-				plugin.list.empty();
-				
-				suggestions = plugin.getSuggestions(plugin.options.source, $me.val());
-				
-				if (suggestions.length > 1) {
-					for(var i = 0, l = suggestions.length; i < l; i++) {
-						$('<li/>').html(suggestions[i])
-						.on('click', {'plugin': plugin}, plugin.onOptionClick) // add click event handler
-						.appendTo(plugin.list);
-					}
-=======
-		
 			suggestions = plugin.getSuggestions(plugin.options.source, $me.val());
-				
-				if (suggestions.length) {
->>>>>>> initial commit 👌
-					plugin.list.show();
-				} else {
-					plugin.list.hide();
-				}
-<<<<<<< HEAD
-
-=======
-				
-				plugin.list.empty();
-				
+			
+			if (suggestions.length > 1) {
 				for(var i = 0, l = suggestions.length; i < l; i++) {
 					$('<li/>').html(suggestions[i])
 					.on('click', {'plugin': plugin}, plugin.onOptionClick) // add click event handler
 					.appendTo(plugin.list);
 				}
->>>>>>> initial commit 👌
+				plugin.list.show();
+			} else {
+				plugin.list.hide();
+			}
 	};
 	
 	/** 

@@ -86,6 +86,7 @@ Make divs appear as button to a screenreader:
 
 ## Static vs Dynamic WAI-ARIA
 [List with descriptions](http://whatsock.com/training/matrices/)
+[Cheat Sheet](https://www.cheatography.com/jreiche/cheat-sheets/wai-aria-1-1/)
 ### Global static properties
 
 - aria-describedby: Identifies the element (or elements) that describes the object.
@@ -134,5 +135,19 @@ Use the tab key to enter and exit the menu. Use the arrow keys to navigate withi
 - aria-relevant: Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
 
 ## Browser and Screen Reader Support for WAI-ARIA
-- May require short-term workarounds as support for WAI_ARIA is fully implemented
+- May require short-term workarounds until support for WAI-ARIA is fully implemented
 - [Support table](https://www.powermapper.com/tests/screen-readers/aria/)
+
+## Graceful Degradation vs Progressive Enhancement
+- progressive enhancement is preferred, since it focuses on always providing base functionality and planning for future enhancements
+- expensive assistive tech = less upgrades = need to support +5 yrs
+- Example: page nav
+    - WAI-ARIA: landmarks
+    - Always works: bypass links next to nav elements and at top of main content area
+- Also: use redundant roles for new HTML el (nav, main)
+
+## Validating WAI-ARIA
+[W3C Web-based HTML Validator.](https://validator.w3.org/) Validates WAI-ARIA as part of HTML5
+[Lighthouse.](https://developers.google.com/web/tools/lighthouse/) Adds a "Audit" tab
+[ARIA Validator](https://chrome.google.com/webstore/detail/aria-validator/oigghlanfjgnkcndchmnlnmaojahnjoc)
+[aXe](https://chrome.google.com/webstore/detail/axe/lhdoppojpmngadmnindnejefpokejbdd)
