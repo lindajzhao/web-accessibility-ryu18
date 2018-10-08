@@ -42,32 +42,32 @@
 - [Example menubar with submenus](https://de.ryerson.ca/wa/aria/jquery/menubar.html)
 - [w3.org WAI-ARIA-1.1](https://www.w3.org/TR/wai-aria-1.1)
 - [Practical ARIA examples](http://heydonworks.com/practical_aria_examples/)
-- aria-describedby: similar to aria-labelledby but more verbose
-- aria-labelledby: references el which should be read when an el is focused (may be offscreen). Has precedence over aria-label
-- aria-label: define label of el with visible text
-- aria-details: references el which provides more detail than aria-describedby. Not used in Name Computation or Description Computation. Not converted to string(can reference nested DOM els). Precedence over aria-describedby
-- aria-required (form): indicate field is required, just like symbols for sighted users
-- aria-controls: property on an interactive el which indicate which el(s) it alters
-- aria-owns: list of IDs to defines parent/child relationship where it differs from DOM relationship. Each ID can only be owned by 1 el
-- aria-haspopup: popup appears as a block of content on top of other content
+- **aria-describedby**: similar to aria-labelledby but more verbose
+- **aria-labelledby**: references el which should be read when an el is focused (may be offscreen). Has precedence over aria-label
+- **aria-label**: define label of el with visible text
+- **aria-details**: references el which provides more detail than aria-describedby. Not used in Name Computation or Description Computation. Not converted to string(can reference nested DOM els). Precedence over aria-describedby
+- **aria-required** (form): indicate field is required, just like symbols for sighted users
+- **aria-controls**: property on an interactive el which indicate which el(s) it alters
+- **aria-owns**: list of IDs to defines parent/child relationship where it differs from DOM relationship. Each ID can only be owned by 1 el
+- **aria-haspopup**: popup appears as a block of content on top of other content
     - Container must have role of menu, listbox, tree, grid, dialogue. value of aria-haspop must match this role
     - aria-haspopup="true" defaults to "menu"
-- aria-live: indicates this el will be updated. If not set, use aria-live value of nearest ancestor
+- **aria-live**: indicates this el will be updated. If not set, use aria-live value of nearest ancestor
     - off (default): updates should not be presented unless user is currently focused on that area
     - polite: presented at next graceful opportunity
     - assertive: highest priority: present immediately
-- aria-relevant: indicates what accessibility tree semantic changes within a live region should be presented
+- **aria-relevant**: indicates what accessibility tree semantic changes within a live region should be presented
     - optional on live regions
     - additions, removals, and/or text. (or all)
-- aria-atomic: true/false(default). Determines whether to present changes up the ancestor tree based on aria-relevant notifications
-- aria-roledescription: provides human-readable copy for role. To be localized or more descriptive. This is read instead of role.
+- **aria-atomic**: true/false(default). Determines whether to present changes up the ancestor tree based on aria-relevant notifications
+- **aria-roledescription**: provides human-readable copy for role. To be localized or more descriptive. This is read instead of role.
     - `<div role="region" aria-roledescription="slide">`
 
 # WAI-ARIA Alert and Message Dialogs
 - Used to communicate error, confirmation, warning and completion
 - excludes tooltips
-- use role="alert" when no user input is not needed.
-- "alertdialog" when user input is expected.
+- use **role="alert"** when no user input is not needed.
+- **role="alertdialog"** when user input is expected.
     - Both roles create live regions. default: `aria-live=”assertive”` and `aria-atomic=”true”`
 - modal dialogues interrupt users to give important info and require an action. use `role=”alertdialog”` and `aria-modal=”true”`.
 
@@ -87,18 +87,18 @@
 - both will disable default kbd functionality (also role="none")
     - nested items WILL still be announced as usual
     - preserves tab focus (and tabindex) and global states/properties
-- role="application" where there isn't a predefined widget pattern
-- Three common uses for role=”presentation” include:åå
+- **role="application"** where there isn't a predefined widget pattern
+- Three common uses for **role=”presentation”** include:
     1. Hiding a decorative image; it is equivalent to giving the image null alt text.
     2. Suppressing table semantics for tables used for layout in circumstances where the table semantics do not convey meaningful relationships.
     3. Eliminating semantics of intervening orphan elements in the structure of a composite widget, such as a tablist, menu, or tree as demonstrated in the example above.
 
 # Live Regions
 - roles/props that create live regions:
-    - aria-live: polite, assertive, off
-    - aria-relevant: additions, removals, text, all
-    - aria-atomic: true, false
-    - aria-busy: true, false
+    - **aria-live**: polite, assertive, off
+    - **aria-relevant**: additions, removals, text, all
+    - **aria-atomic**: true, false
+    - **aria-busy**: true, false
     - role=”alert”
     - role=”log”
     - role=”marquee”
