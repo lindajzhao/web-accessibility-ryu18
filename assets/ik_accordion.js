@@ -49,9 +49,9 @@
 				'role': 'button',
                 'aria-controls': id + '_panel_' + i, // associate button with corresponding panel
                 'aria-expanded': false, // toggle expanded state
-				// 'tabindex': 0, //add keyboard focus
+				'tabindex': 0, //add keyboard focus
 			})
-			.addClass('button')
+			.addClass('button accordionButton')
 			.html($me.html())
 			.on('click', {'plugin': plugin}, plugin.togglePanel)
 			.on('keydown', {'plugin': plugin}, plugin.onKeyDown);
