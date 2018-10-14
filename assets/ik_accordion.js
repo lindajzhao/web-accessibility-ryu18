@@ -101,7 +101,7 @@
 				
 				$hdr = $(el);
 				$btn = $hdr.find('.button');
-				
+
 				if($btn[0] != $(event.currentTarget)[0]) { 
 					console.log('header click: EXPAND');
 					
@@ -123,6 +123,10 @@
 			});
 			
 		} else { // toggle current panel depending on the state
+			$btn = $(event.currentTarget);
+			$btn.attr({
+				'aria-expanded': !isVisible,
+			});
 			$panel.slideToggle({ duration: plugin.options.animationSpeed });
 		}
 	};
