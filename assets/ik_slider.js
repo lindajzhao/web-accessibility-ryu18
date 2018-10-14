@@ -6,7 +6,7 @@
 			'maxValue': 100,
 			'nowValue': 0,
 			'step': 1,
-			'instructions': 'Use the right and left arrow keys to increase or decrease the slider value. ',
+			'instructions': 'Use right and left arrow keys to change the slider value by one increment. Home and End keys to set value to minimum and maximum values correspondingly',
 		};
 	 
 	/**
@@ -69,7 +69,7 @@
                     'aria-valuemin': plugin.options.minValue, // set slider minimum value
                     'aria-valuemax': plugin.options.maxValue, // set slider maximum value
                     'aria-valuenow': plugin.options.minValue, // set slider current value
-                    'aria-describedby': id + '_instructions' // add description */
+                    'aria-labelledby': id + '_instructions' // add description */
 				})
 				.addClass('ik_knob')
 				.on('keydown', {'plugin': plugin}, plugin.onKeyDown)
@@ -92,7 +92,7 @@
 				})
 				.text(this.options.instructions)
 				.addClass('ik_readersonly')
-				.appendTo(this.element);
+				.appendTo(this.element);			
 		}
 					
 	};
@@ -230,6 +230,7 @@
 	
 		switch (event.keyCode) {
 		
+			case ik_utils.keys.up:
 			case ik_utils.keys.right:
 			
 				value = parseInt($elem.attr('aria-valuenow')) + plugin.options.step;
@@ -241,6 +242,7 @@
 				plugin.setValue(plugin.options.maxValue);
 				break;
 		
+			case ik_utils.keys.down:
 			case ik_utils.keys.left:
 			
 				value = parseInt($elem.attr('aria-valuenow')) - plugin.options.step;
