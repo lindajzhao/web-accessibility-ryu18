@@ -36,7 +36,6 @@
 			.addClass('ik_tabbar cf')
 			.attr({
 				'role': 'tablist',
-				'tabindex': 0 			
 			})
 			.prependTo($elem);
 		
@@ -62,7 +61,7 @@
 				$tab = $('<li/>').attr({
 					'id': id + '_tab' + i, // create unique id for a tab
 					'role': 'tab', // assign tab role
-    				'aria-controls': 'panel' + i,
+    				'aria-controls': id + '_panel' + i,
 				})
 				.text(lbl > '' ? lbl : 'Tab ' + (i + 1))
 				.on('click', {'plugin': plugin, 'index': i}, plugin.selectTab) // add mouse event handler
@@ -104,7 +103,7 @@
 			// Allow users to tab from tablist to panel
 			.attr({
 				'aria-selected': false,
-				'tabindex': -1 // remove them from tab order
+				'tabindex': -1,
 			})
 			.blur();
 		
@@ -112,7 +111,7 @@
 			.addClass('selected')
 			.attr({
 				'aria-selected': true,
-				'tabindex': 0
+				'tabindex': 0,
 			});
 		
 		if (event.type) $($tabs[ind]).focus(); // move focus to current tab if reached by mouse or keyboard
