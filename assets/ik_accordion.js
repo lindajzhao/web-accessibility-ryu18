@@ -28,34 +28,33 @@
 		
 		var id, $elem, plugin;
 		
-		id = 'acc' + $('.ik_accordaion').length; // create unique id
+		id = 'acc' + $('.ik_accordion').length; // create unique id
 		$elem = this.element;
 		plugin = this;
 		
 		$elem.attr({
 			'id': id,
-			'role': 'region',
+			'role': 'presentation',
 		}).addClass('ik_accordion');
 		
 		this.headers = $elem.children('dt').each(function(i, el) {
 			var $me, $btn;
 			
-			$me = $(el);
-			$btn = $('<div/>').attr({
+			$me = $(el).attr({
+				'role': 'heading',
+				// aria-level ...
+			});
+			$btn = $('<button/>').attr({
 				'id': id + '_btn_' + i,
 				'role': 'button',
                 'aria-controls': id + '_panel_' + i, // associate button with corresponding panel
                 'aria-expanded': false, // toggle expanded state
-                'tabindex': 0 //add keyboard focus
+				// 'tabindex': 0, //add keyboard focus
 			})
 			.addClass('button')
 			.html($me.html())
 			.on('click', {'plugin': plugin}, plugin.togglePanel)
-			.on('keydown', {'plugin': plugin}, plugin.onKeyDown)
-			.attr({
-				'role': 'heading',
-				// aria-level ...
-			});
+			.on('keydown', {'plugin': plugin}, plugin.onKeyDown);
 			
 			$me.empty().append($btn); // wrap content of each header in an element with role button
 		});
@@ -66,7 +65,8 @@
 				'id': id,
 				'role': 'region', // add role region to each panel
                 'aria-hidden': true, // mark all panels as hidden
-                'tabindex': 0, // add panels into the tab order
+				'tabindex': 0, // add panels into the tab order
+				'aria-labelledby': 'acc1_btn_' + i, // TODO
 			});
 		}).hide();
 		
