@@ -2,7 +2,8 @@
 	
 	var pluginName = 'ik_carousel',
 		defaults = { // default settings
-			'animationSpeed' : 3000
+			'animationSpeed' : 10000,
+			'instructions': 'Carousel widget. Use left and reight arrows to navigate between slides.',
 		};
 	 
 	/**
@@ -34,14 +35,30 @@
 		
 		$elem
 			.attr({
-				'id': id
+				'id': id,
+				'role': 'region', 
+    			'tabindex': 0, 
+    			'aria-describedby': id + '_instructions',
 			})
 			.addClass('ik_carousel')
 			.on('mouseenter', {'plugin': plugin}, plugin.stopTimer)
 			.on('mouseleave', {'plugin': plugin}, plugin.startTimer)
+			.on('keydown', {'plugin': plugin}, plugin.onKeyDown);
+
+		
+		$('<div/>') // SR Hidden text
+			.attr({
+				'id': id + '_instructions',
+				'aria-hidden': 'true'
+			})
+			.text(this.options.instructions)
+			.addClass('ik_readersonly')
+			.appendTo($elem);
 		
 		$controls = $('<div/>')
-
+			.attr({
+				'aria-hidden': 'true', // Hide controls from SR
+			})
 			.addClass('ik_controls')
 			.appendTo($elem);
 				
@@ -69,12 +86,16 @@
 				
 				$me.css({
 						'background-image': 'url(' + $src + ')'
-					});	
+					})
+					.attr({
+						'aria-hidden': 'true' // hide images from screen readers
+					});
 				
 				$('<li/>')
 					.on('click', {'plugin': plugin, 'slide': i}, plugin.gotoSlide)
 					.appendTo($navbar);
 			});
+
 		
 		plugin.navbuttons = $navbar.children('li');
 		plugin.slides.first().addClass('active');
@@ -101,6 +122,11 @@
 			plugin.timer = null;
 		}
 		
+		// Stop reading carousel content onblur
+		if (event.type === 'focusout') {
+			plugin.element.removeAttr('aria-live');
+		}
+
 		plugin.timer = setInterval(plugin.gotoSlide, plugin.options.animationSpeed, {'data':{'plugin': plugin, 'slide': 'right'}});
 		
 	};
@@ -113,8 +139,13 @@
 	 * @param {object} event.data.plugin - Reference to plugin.
 	 */
 	Plugin.prototype.stopTimer = function (event) {
-		
 		var plugin = event.data.plugin;
+
+		// Read contents of carousel 
+		 if (event.type === 'focusin') {
+			plugin.element.attr({'aria-live': 'polite'});
+		}
+
 		clearInterval(plugin.timer);
 		plugin.timer = null;
 		
@@ -165,12 +196,23 @@
 			active = $(this);
 			next = event.data.next;
 			dir = event.data.dir;
-			
-			active.off( ik_utils.getTransitionEventName() )
-				.removeClass(direction + ' active');
+			// debugger
+			// Hide current slide from SR and make next slide visible
+			active
+				.attr({
+					'aria-hidden': 'true'
+				})
+				.off( ik_utils.getTransitionEventName() )
+				.removeClass(direction + ' active')
 				
-			next.removeClass('next')
-				.addClass('active');
+				
+			next
+				.attr({
+					'aria-hidden': 'false',
+				})
+				.removeClass('next')
+				.addClass('active')
+				
 			
 		});
 		
@@ -178,6 +220,33 @@
 		
 	}
 	
+	/**
+	* Handles keydown event on the next/prev links.
+	*
+	* @param {Object} event - Keyboard event.
+	* @param {object} event.data - Event data.
+	* @param {object} event.data.plugin - Reference to plugin.
+	*/
+	Plugin.prototype.onKeyDown = function (event) {
+		
+		var plugin = event.data.plugin;
+		
+		switch (event.keyCode) {
+			
+			case ik_utils.keys.left:
+				event.data = {'plugin': plugin, 'slide': 'left'};
+				plugin.gotoSlide(event);
+				break;
+			case ik_utils.keys.right:
+				event.data = {'plugin': plugin, 'slide': 'right'};
+				plugin.gotoSlide(event);
+				break;
+			case ik_utils.keys.esc:
+				plugin.element.blur();
+				break;
+			}
+	}
+
 	$.fn[pluginName] = function ( options ) {
 		
 		return this.each(function () {
